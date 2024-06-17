@@ -21,9 +21,9 @@ public class JwtUtils {
 
 	public String generateJwt(SignUp signUp) {
 		try {
-			String jwt = Jwts.builder().header().add("id", signUp.getId())
-					.add("issuedAt", new Date(System.currentTimeMillis()))
-					.add("expiryAt", new Date((System.currentTimeMillis()) + 60)).and()
+			String jwt = Jwts.builder().header().and().claim("id", signUp.getId())
+					.claim("issuedAt", new Date(System.currentTimeMillis()))
+					.claim("expiryAt", new Date((System.currentTimeMillis()) + 3600000))
 					.claim("name", signUp.getUsername()).claim("email", signUp.getEmail())
 					.claim("ph_Num", signUp.getPhNum()).claim("gender", signUp.getGender()).signWith(getSigningKey())
 					.compact();
@@ -50,4 +50,10 @@ public class JwtUtils {
 			return e.toString();
 		}
 	}
+	
+//	public String takeData(String token) {
+//		try {
+//			
+//		}
+//	}
 }
