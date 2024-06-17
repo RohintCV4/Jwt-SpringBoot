@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class LogInService {
 			apiResponse.setData("Can't Login");
 
 		}
+		
+		if(login.getRole().equals("admin")) {
+			List<SignUp> entireData=signUpRepository.findAll();
+			apiResponse.setData1
+			(entireData);
+		}
+		
 		String token = jwtUtils.generateJwt(login);
 
 		Map<String, Object> data = new HashMap<>();

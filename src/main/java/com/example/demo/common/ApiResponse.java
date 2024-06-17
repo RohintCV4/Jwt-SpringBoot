@@ -9,6 +9,7 @@ public class ApiResponse {
 
 	private Integer status;
 	private Object data;
+	private Object data1;
 	private Object error;
 
 	public ApiResponse() {
