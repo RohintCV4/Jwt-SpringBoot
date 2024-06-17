@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.common.ApiResponse;
 import com.example.demo.dto.LogInDto;
 import com.example.demo.entity.SignUp;
+import com.example.demo.key.JwtUtils;
 import com.example.demo.repository.SignUpRepository;
-import com.example.demo.utils.JwtUtils;
 
 @Service
 public class LogInService {
