@@ -4,10 +4,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.stereotype.Component;
 
 import com.example.demo.entity.SignUp;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -34,8 +37,17 @@ public class JwtUtils {
 	}
 	private Key getSigningKey() {
 	    
-	    byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+	    byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_16);
 	    return Keys.hmacShaKeyFor(keyBytes);
 	}
-}
+	public String tokenVerify(String token) {
+		try {
+		    Jwts.parser().verifyWith((SecretKey)getSigningKey()).build().parseSignedClaims(token);
+		    return "success";
 
+		} catch (JwtException e) {
+
+			return e.toString();
+		}
+	}
+}

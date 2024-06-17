@@ -10,10 +10,6 @@ import com.example.demo.entity.SignUp;
 
 public interface SignUpRepository extends JpaRepository<SignUp, Long> {
     
-//    static SignUp findOneByEmailIdIgnoreCaseAndPassword(String email, String password) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	SignUp findByUsernameAndPassword(String username, String password);
 
