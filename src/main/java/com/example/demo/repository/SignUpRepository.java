@@ -7,9 +7,7 @@ import com.example.demo.entity.SignUp;
 
 @Repository
 
-
 public interface SignUpRepository extends JpaRepository<SignUp, Long> {
-    
 
 	SignUp findByUsernameAndPassword(String username, String password);
 

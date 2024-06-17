@@ -16,27 +16,27 @@ import com.example.demo.repository.SignUpRepository;
 public class LogInService {
 	@Autowired
 	private SignUpRepository signUpRepository;
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
-	
+
 	public ApiResponse LogIn(LogInDto logInDto) {
-		ApiResponse apiResponse=new ApiResponse();
-		
-		SignUp login=signUpRepository.findByUsernameAndPassword(logInDto.getUsername(),logInDto.getPassword());
-		
-		if(login.getId() == null) {
+		ApiResponse apiResponse = new ApiResponse();
+
+		SignUp login = signUpRepository.findByUsernameAndPassword(logInDto.getUsername(), logInDto.getPassword());
+
+		if (login.getId() == null) {
 			apiResponse.setData("Can't Login");
-			
+
 		}
 		String token = jwtUtils.generateJwt(login);
 
-        Map<String , Object> data = new HashMap<>();
-        data.put("accessToken", token);
+		Map<String, Object> data = new HashMap<>();
+		data.put("accessToken", token);
 
-        apiResponse.setData(data);
+		apiResponse.setData(data);
 
-        return apiResponse;
+		return apiResponse;
 	}
-	
+
 }

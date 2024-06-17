@@ -12,8 +12,8 @@ import com.example.demo.repository.SignUpRepository;
 public class SignUpService {
 
 	@Autowired
-	private SignUpRepository signUpRepository; 
-	
+	private SignUpRepository signUpRepository;
+
 	public ApiResponse SignIn(SignUpDto signUpDto) {
 		ApiResponse apiResponse = new ApiResponse();
 		SignUp signUp = new SignUp();
@@ -22,10 +22,11 @@ public class SignUpService {
 		signUp.setGender(signUpDto.getGender());
 		signUp.setPassword(signUpDto.getPassword());
 		signUp.setPhNum(signUpDto.getPhNum());
-		
+		signUp.setRole(signUpDto.getRole());
+
 		signUpRepository.save(signUp);
 		apiResponse.setData(signUp);
 		return apiResponse;
-		
+
 	}
 }

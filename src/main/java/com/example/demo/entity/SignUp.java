@@ -18,25 +18,28 @@ import lombok.Data;
 @Data
 public class SignUp {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
-	
-	@Column(name="username")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
+	private Long id;
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="email")
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="gender")
+
+	@Column(name = "gender")
 	private String gender;
-	
-	@Column(name="phone_number")
+
+	@Column(name = "phone_number")
 	private String phNum;
-	
+
+	@Column(name = "role")
+	private String role;
+
 	@CreationTimestamp
 	@Column(updatable = false, name = "created_at")
 	private Date createdAt;
@@ -44,5 +47,5 @@ public class SignUp {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Date updatedAt;
-	
+
 }

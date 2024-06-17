@@ -16,38 +16,34 @@ import com.example.demo.key.JwtUtils;
 import com.example.demo.service.LogInService;
 import com.example.demo.service.SignUpService;
 
-
 @RestController
 @RequestMapping("/req")
 public class SignUpController {
-	
+
 	@Autowired
 	private SignUpService signUpService;
-	
+
 	@Autowired
 	private LogInService logInService;
-	
+
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse> signUp(@RequestBody SignUpDto signUpDto){
-		ApiResponse apiResponse=signUpService.SignIn(signUpDto);
+	public ResponseEntity<ApiResponse> signUp(@RequestBody SignUpDto signUpDto) {
+		ApiResponse apiResponse = signUpService.SignIn(signUpDto);
 		return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse> logIn(@RequestBody LogInDto logInDto) {
 //		System.out.println(logInDto.getUsername());
 //		return null;
-		ApiResponse apiResponse=logInService.LogIn(logInDto);
-		return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);	
+		ApiResponse apiResponse = logInService.LogIn(logInDto);
+		return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
 	}
-	
+
 	@GetMapping("/verify")
 	public String tokenVerify(@RequestHeader String token) {
-		JwtUtils jwtUtils=new JwtUtils();
+		JwtUtils jwtUtils = new JwtUtils();
 		return jwtUtils.tokenVerify(token);
 	}
-	
-	
-	
-	
+
 }
