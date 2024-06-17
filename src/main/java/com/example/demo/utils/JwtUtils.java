@@ -1,4 +1,4 @@
-package com.example.demo.key;
+package com.example.demo.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
