@@ -7,7 +7,7 @@ import com.example.demo.dto.SignUpDto;
 import com.example.demo.entity.SignUp;
 import com.example.demo.repository.SignUpRepository;
 import com.example.demo.utils.ApiResponse;
-import com.example.demo.utils.UserRole;
+import com.example.demo.utils.Role;
 
 @Service
 public class SignUpService {
@@ -23,7 +23,7 @@ public class SignUpService {
 		signUp.setGender(signUpDto.getGender());
 		signUp.setPassword(signUpDto.getPassword());
 		signUp.setPhNum(signUpDto.getPhNum());
-		signUp.setRole(UserRole.user);
+		signUp.setRole(Role.user);
 
 		signUpRepository.save(signUp);
 		apiResponse.setData(signUp);

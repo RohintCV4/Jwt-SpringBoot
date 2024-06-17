@@ -12,7 +12,7 @@ import com.example.demo.entity.SignUp;
 import com.example.demo.repository.SignUpRepository;
 import com.example.demo.utils.ApiResponse;
 import com.example.demo.utils.JwtUtils;
-import com.example.demo.utils.UserRole;
+import com.example.demo.utils.Role;
 
 @Service
 public class LogInService {
@@ -32,7 +32,7 @@ public class LogInService {
 
 		}
 		
-		if(login.getRole().equals(UserRole.admin)) {
+		if(login.getRole().equals(Role.admin)) {
 			List<SignUp> entireData=signUpRepository.findAll();
 			apiResponse.setData1
 			(entireData);
