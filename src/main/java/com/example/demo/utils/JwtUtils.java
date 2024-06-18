@@ -21,57 +21,53 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtils {
 
-    private String secret = "qwertyuiopkjjhgfdsazxcvdzdbnwery";
+	private String secret = "qwertyuiopkjjhgfdsazxcvdzdbnwery";
 
-    public String generateJwt(SignUp signUp) {
-        try {
-            String jwt = Jwts.builder()
-                    .claim("id", signUp.getId())
-                    .claim("issuedAt", new Date(System.currentTimeMillis()))
-                    .claim("expiryAt", new Date(System.currentTimeMillis() + 3600000))
-                    .claim("name", signUp.getUsername())
-                    .claim("email", signUp.getEmail())
-                    .claim("ph_Num", signUp.getPhNum())
-                    .claim("gender", signUp.getGender())
-                    .signWith(getSigningKey())
-                    .compact();
-            takeData(jwt);
-            return jwt;
-        } catch (Exception e) {
-            return e.toString();
-        }
-    }
+	public String generateJwt(SignUp signUp) {
+		try { 
+			String jwt = Jwts.builder().header().and().claim("id", signUp.getId())
+					.claim("issuedAt", new Date(System.currentTimeMillis()))
+					.claim("expiryAt", new Date(System.currentTimeMillis() + 3600000))
+					.claim("name", signUp.getUsername()).claim("email", signUp.getEmail())
+					.claim("ph_Num", signUp.getPhNum()).claim("gender", signUp.getGender()).signWith(getSigningKey())
+					.compact();
+			takeData(jwt);
+			return jwt;
+		} catch (Exception e) {
+			return e.toString();
+		}
+	}
 
-    private Key getSigningKey() {
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_16);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
+	private Key getSigningKey() {
+		byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
 
-    public String tokenVerify(String token) {
-        try {
-        	Jwts.parser().verifyWith((SecretKey) getSigningKey()).build().parseSignedClaims(token);
-			
+	public String tokenVerify(String token) {
+		try {
+			Jwts.parser().verifyWith((SecretKey) getSigningKey()).build().parseSignedClaims(token);
+
 			return "success";
-        } catch (JwtException e) {
-            return e.toString();
-        }
-    }
+		} catch (JwtException e) {
+			return e.toString();
+		}
+	}
 
-    public String takeData(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC512(secret);
-            JWTVerifier verifier = JWT.require(algorithm).build();
+	public String takeData(String token) {
+		try {
+			Algorithm algorithm = Algorithm.HMAC256(secret);
+			JWTVerifier verifier = JWT.require(algorithm).build();
 
-            // Verify and decode the JWT
-            DecodedJWT jwt = verifier.verify(token);
+			// Verify and decode the JWT
+			DecodedJWT jwt = verifier.verify(token);
 
-            System.out.println("Token is valid: " + jwt.getToken());
-            System.out.println("Name: " + jwt.getClaim("name").asString());
-            System.out.println("Email: " + jwt.getClaim("email").asString());
-        } catch (Exception e) {
-            // Handle the exception
-            System.err.println("Invalid Token: " + e.getMessage());
-        }
-        return null;
-    }
+			System.out.println("Token is valid: " + jwt.getToken());
+			System.out.println("Name: " + jwt.getClaim("name").asString());
+			System.out.println("Email: " + jwt.getClaim("email").asString());
+		} catch (Exception e) {
+			// Handle the exception
+			System.err.println("Invalid Token: " + e.getMessage());
+		}
+		return null;
+	}
 }
