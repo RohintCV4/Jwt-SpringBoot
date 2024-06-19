@@ -24,14 +24,14 @@ public class SignUpService {
 		signUp.setUsername(signUpDto.getUsername());
 		signUp.setEmail(signUpDto.getEmail());
 		signUp.setGender(signUpDto.getGender());
-		
+
 		try {
-            signUp.setPassword(encdecUtils.encrypt(signUpDto.getPassword()));
-        } catch (Exception e) {
-            apiResponse.setError("Error encrypting password: " + e.getMessage());
-            return apiResponse;
-        }
-		
+			signUp.setPassword(encdecUtils.encrypt(signUpDto.getPassword()));
+		} catch (Exception e) {
+			apiResponse.setError("Error encrypting password: " + e.getMessage());
+			return apiResponse;
+		}
+
 		signUp.setPhNum(signUpDto.getPhNum());
 		signUp.setRole(Role.user);
 

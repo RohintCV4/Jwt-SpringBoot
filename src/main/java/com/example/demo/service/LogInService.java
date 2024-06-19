@@ -51,6 +51,10 @@ public class LogInService {
 			List<SignUp> entireData = signUpRepository.findAll();
 			apiResponse.setData1(entireData);
 		}
+		
+//		if(jwtUtils.takeData()) {
+//			
+//		}
 
 		String token = jwtUtils.generateJwt(login);
 
