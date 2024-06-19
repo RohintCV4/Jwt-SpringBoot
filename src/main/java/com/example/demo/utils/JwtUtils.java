@@ -52,7 +52,7 @@ public class JwtUtils {
 			return e.toString();
 		}
 	}
-
+	String cla="";
 	public String takeData(String token) {
 		try {
 			Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -64,10 +64,13 @@ public class JwtUtils {
 			System.out.println("Token is valid: " + jwt.getToken());
 			System.out.println("Name: " + jwt.getClaim("name").asString());
 			System.out.println("Email: " + jwt.getClaim("email").asString());
+			//cla=jwt.getClaim("name")+"\n"+jwt.getClaim("email");
+			
 		} catch (Exception e) {
 			// Handle the exception
 			System.err.println("Invalid Token: " + e.getMessage());
 		}
-		return null;
+		//return null;
+		return cla;
 	}
 }

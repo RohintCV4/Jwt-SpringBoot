@@ -11,6 +11,7 @@ import com.example.demo.dto.LogInDto;
 import com.example.demo.entity.SignUp;
 import com.example.demo.repository.SignUpRepository;
 import com.example.demo.utils.ApiResponse;
+import com.example.demo.utils.EncDecUtils;
 import com.example.demo.utils.JwtUtils;
 import com.example.demo.utils.Role;
 
@@ -18,6 +19,8 @@ import com.example.demo.utils.Role;
 public class LogInService {
 	@Autowired
 	private SignUpRepository signUpRepository;
+	@Autowired
+	private EncDecUtils encdecUtils;
 
 	@Autowired
 	private JwtUtils jwtUtils;
@@ -25,19 +28,30 @@ public class LogInService {
 	public ApiResponse LogIn(LogInDto logInDto) {
 		ApiResponse apiResponse = new ApiResponse();
 
-		SignUp login = signUpRepository.findByUsernameAndPassword(logInDto.getUsername(), logInDto.getPassword());
+		SignUp login = signUpRepository.findByUsername(logInDto.getUsername());
 
-		if (login.getId() == null) {
+		if (login == null || login.getId() == null) {
 			apiResponse.setData("Can't Login");
+			return apiResponse;
 
 		}
-		
-		if(login.getRole().equals(Role.admin)) {
-			List<SignUp> entireData=signUpRepository.findAll();
-			apiResponse.setData1
-			(entireData);
+
+		try {
+			String decryptedPassword = encdecUtils.decrypt(login.getPassword());
+			if (!decryptedPassword.equals(logInDto.getPassword())) {
+				apiResponse.setData("Invalid credentials");
+				return apiResponse;
+			}
+		} catch (Exception e) {
+			apiResponse.setData("Error decrypting password: " + e.getMessage());
+			return apiResponse;
 		}
-		
+
+		if (login.getRole().equals(Role.admin)) {
+			List<SignUp> entireData = signUpRepository.findAll();
+			apiResponse.setData1(entireData);
+		}
+
 		String token = jwtUtils.generateJwt(login);
 
 		Map<String, Object> data = new HashMap<>();
